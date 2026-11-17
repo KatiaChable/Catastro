@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 /* =========================================
@@ -6,53 +7,41 @@
    ========================================= */
 
 @theme {
-  /* Paleta Institucional */
+  /* Tipografía */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Paleta Institucional Coatzacoalcos */
+  --color-coatza-wine: #741333;
+  --color-coatza-wine-dark: #580a22;
+  --color-coatza-gold: #c59b4c;
+  --color-coatza-gold-light: #e5c158;
+
+  /* Colores primarios */
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
   --color-primary-500: #3b82f6;
   --color-primary-600: #2563eb;
   --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-  --color-primary-950: #172554;
-
-  /* Colores de Acento */
-  --color-accent-50: #f0fdf4;
-  --color-accent-500: #22c55e;
-  --color-accent-600: #16a34a;
-  --color-accent-700: #15803d;
 
   /* Colores de Estado */
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
   --color-info: #3b82f6;
-
-  /* Neutrales */
-  --color-surface: #ffffff;
-  --color-surface-dark: #111827;
-  --color-muted: #6b7280;
-
-  /* Tipografía */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-
-  /* Sombras */
-  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 /* Estilos base */
-body {
+html, body {
   font-family: var(--font-sans);
-  @apply bg-gray-50 text-gray-900 antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  @apply bg-gray-50 text-gray-900;
 }
 
 /* Scrollbar personalizado */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {

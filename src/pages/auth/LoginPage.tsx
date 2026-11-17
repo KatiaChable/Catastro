@@ -11,6 +11,8 @@ export default function LoginPage() {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,7 +25,7 @@ export default function LoginPage() {
       await login(identifier, password);
       navigate(ROUTES.DASHBOARD);
     } catch {
-      // Para desarrollo si el backend está desconectado
+      // Para desarrollo
       navigate(ROUTES.DASHBOARD);
     } finally {
       setIsLoading(false);
@@ -36,14 +38,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-7 sm:p-8 w-full max-w-[390px] text-gray-900 border border-gray-100">
+    <div className="bg-white rounded-2xl shadow-2xl p-7 sm:p-8 w-full max-w-[390px] text-gray-900 border border-gray-100/80">
       {/* Título y subtítulo */}
       <div className="mb-5">
-        <h2 className="text-[22px] font-bold text-gray-900 tracking-tight leading-snug">
+        <h2 className="text-[23px] font-bold text-gray-900 tracking-tight leading-snug">
           Iniciar sesión
         </h2>
-        <p className="text-xs text-gray-500 mt-1">
-          Ingresa tus credenciales para acceder.
+        <p className="text-xs text-gray-500 mt-1 font-normal">
+          Ingresa a tu cuenta para acceder al sistema.
         </p>
       </div>
 
@@ -56,7 +58,7 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit} className="space-y-3.5">
         {/* Identificador */}
         <div>
-          <label className="block text-xs font-medium text-gray-800 mb-1">
+          <label className="block text-xs font-medium text-gray-700 mb-1.5">
             Correo electrónico, CURP o RFC
           </label>
           <input
@@ -65,19 +67,19 @@ export default function LoginPage() {
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
             placeholder="nombre@ejemplo.com / CURP / RFC"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs sm:text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#6e0e29] focus:ring-1 focus:ring-[#6e0e29] transition-colors"
+            className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-xs sm:text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#741333] focus:ring-1 focus:ring-[#741333] transition-colors"
           />
         </div>
 
         {/* Contraseña */}
         <div>
-          <div className="flex justify-between items-center mb-1">
-            <label className="block text-xs font-medium text-gray-800">
+          <div className="flex justify-between items-center mb-1.5">
+            <label className="block text-xs font-medium text-gray-700">
               Contraseña
             </label>
             <Link
               to={ROUTES.FORGOT_PASSWORD}
-              className="text-[11px] text-[#6e0e29] hover:underline font-normal"
+              className="text-[11px] text-[#741333] hover:underline font-normal"
             >
               ¿Olvidaste tu contraseña?
             </Link>
@@ -89,23 +91,36 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Ingresa tu contraseña"
-              className="w-full px-3 py-2 pr-16 border border-gray-300 rounded-lg text-xs sm:text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#6e0e29] focus:ring-1 focus:ring-[#6e0e29] transition-colors"
+              className="w-full px-3.5 py-2.5 pr-16 border border-gray-300 rounded-lg text-xs sm:text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#741333] focus:ring-1 focus:ring-[#741333] transition-colors"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-600 hover:text-gray-900 font-normal select-none"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-gray-600 hover:text-gray-900 font-normal select-none"
             >
               {showPassword ? 'Ocultar' : 'Mostrar'}
             </button>
           </div>
         </div>
 
+        {/* Recordarme */}
+        <div className="flex items-center">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="rounded border-gray-300 text-[#741333] focus:ring-[#741333] w-3.5 h-3.5"
+            />
+            <span className="text-xs text-gray-600 font-normal">Mantener sesión iniciada</span>
+          </label>
+        </div>
+
         {/* Botón Iniciar sesión */}
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full mt-1.5 py-2.5 px-4 bg-[#6e0e29] hover:bg-[#560a1f] text-white font-medium rounded-lg text-xs sm:text-sm transition-colors duration-150 shadow-sm cursor-pointer disabled:opacity-50"
+          className="w-full mt-2 py-2.5 px-4 bg-[#741333] hover:bg-[#580a22] text-white font-medium rounded-lg text-xs sm:text-sm transition-colors duration-150 shadow-md hover:shadow-lg cursor-pointer disabled:opacity-50"
         >
           {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
         </button>
@@ -113,21 +128,21 @@ export default function LoginPage() {
 
       {/* Sección inferior */}
       <div className="mt-5 pt-4 border-t border-gray-100 text-center space-y-2">
-        <p className="text-xs text-gray-600">¿No tienes una cuenta?</p>
+        <p className="text-xs text-gray-600 font-normal">¿No tienes una cuenta?</p>
         <Link
           to={ROUTES.REGISTER}
-          className="w-full py-2 px-4 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg text-xs sm:text-sm transition-colors block text-center"
+          className="w-full py-2.5 px-4 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg text-xs sm:text-sm transition-colors block text-center"
         >
           Crea tu cuenta
         </Link>
       </div>
 
-      {/* Roles para desarrollo */}
+      {/* Selector de roles de prueba */}
       <div className="mt-4 pt-3 border-t border-gray-100 text-center">
-        <p className="text-[10px] text-gray-400 mb-1 uppercase tracking-wider font-semibold">
-          Roles de prueba
+        <p className="text-[10px] text-gray-400 mb-1.5 uppercase tracking-wider font-semibold">
+          Roles de prueba (Frontend)
         </p>
-        <div className="flex flex-wrap justify-center gap-1 text-[10px]">
+        <div className="flex flex-wrap justify-center gap-1.5 text-[10px]">
           <button
             type="button"
             onClick={() => handleQuickRoleAccess(UserRole.CIUDADANO)}
