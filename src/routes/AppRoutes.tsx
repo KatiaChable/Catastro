@@ -2,28 +2,34 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ROUTES } from '@/constants';
 import { MainLayout, AuthLayout } from '@/components/layout';
 
-// Páginas de Autenticación listas
+// Páginas de Autenticación
 import LoginPage from '@/pages/auth/LoginPage';
 import RegisterPage from '@/pages/auth/RegisterPage';
 import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
 
-// Páginas no realizadas aún (WIP)
+// Dashboard Ciudadano oficial
+import CiudadanoDashboardPage from '@/pages/ciudadano/CiudadanoDashboardPage';
+
+// Páginas pendientes (WIP)
 import WipPage from '@/pages/common/WipPage';
 
 export function AppRoutes() {
   return (
     <Routes>
-      {/* 1. Rutas de Autenticación con diseño oficial */}
+      {/* 1. Rutas de Autenticación */}
       <Route element={<AuthLayout />}>
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
         <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
       </Route>
 
-      {/* 2. Rutas del Sistema en Proceso (Muestran solo el encabezado, WIP y el footer gris sin chatbot) */}
+      {/* 2. Dashboard Ciudadano (con barra lateral, consulta oficial y sin mapas) */}
+      <Route path={ROUTES.DASHBOARD} element={<CiudadanoDashboardPage />} />
+      <Route path="/ciudadano" element={<CiudadanoDashboardPage />} />
+
+      {/* 3. Rutas del Sistema en Proceso (Muestran solo el encabezado oficial, WIP y footer sin chatbot) */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Navigate to={ROUTES.LOGIN} replace />} />
-        <Route path={ROUTES.DASHBOARD} element={<WipPage />} />
         <Route path={ROUTES.MAPA} element={<WipPage />} />
         
         {/* Predios */}
