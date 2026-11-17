@@ -2,87 +2,61 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ROUTES } from '@/constants';
 import { MainLayout, AuthLayout } from '@/components/layout';
 
-// Auth Pages
+// Páginas de Autenticación listas
 import LoginPage from '@/pages/auth/LoginPage';
 import RegisterPage from '@/pages/auth/RegisterPage';
 import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
 
-// Main Pages
-import DashboardPage from '@/pages/dashboard/DashboardPage';
-import MapaPage from '@/pages/mapa/MapaPage';
-import PrediosPage from '@/pages/predios/PrediosPage';
-import PredioDetallePage from '@/pages/predios/PredioDetallePage';
-import PredialPage from '@/pages/predios/PredialPage';
-import TramitesPage from '@/pages/tramites/TramitesPage';
-import TramiteNuevoPage from '@/pages/tramites/TramiteNuevoPage';
-import TramiteDetallePage from '@/pages/tramites/TramiteDetallePage';
-import PagosPage from '@/pages/pagos/PagosPage';
-import DocumentosPage from '@/pages/documentos/DocumentosPage';
-
-// Internal Roles
-import GestorSolicitudesPage from '@/pages/gestor/GestorSolicitudesPage';
-import GestorTrazoPage from '@/pages/gestor/GestorTrazoPage';
-import AutorizadorPendientesPage from '@/pages/autorizador/AutorizadorPendientesPage';
-import DirectorPanelPage from '@/pages/director/DirectorPanelPage';
-import CajeroConciliacionPage from '@/pages/cajero/CajeroConciliacionPage';
-import EstadisticasPage from '@/pages/estadisticas/EstadisticasPage';
-
-// Admin
-import AdminUsuariosPage from '@/pages/admin/AdminUsuariosPage';
-import AdminCatalogosPage from '@/pages/admin/AdminCatalogosPage';
-import AdminTarifasPage from '@/pages/admin/AdminTarifasPage';
-import AdminBitacoraPage from '@/pages/admin/AdminBitacoraPage';
-
-// Error 404
-import NotFoundPage from '@/pages/NotFoundPage';
+// Páginas no realizadas aún (WIP)
+import WipPage from '@/pages/common/WipPage';
 
 export function AppRoutes() {
   return (
     <Routes>
-      {/* Rutas de Autenticación */}
+      {/* 1. Rutas de Autenticación con diseño oficial */}
       <Route element={<AuthLayout />}>
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
         <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
       </Route>
 
-      {/* Rutas del Sistema */}
+      {/* 2. Rutas del Sistema en Proceso (Muestran solo el encabezado, WIP y el footer gris sin chatbot) */}
       <Route element={<MainLayout />}>
-        <Route path="/" element={<Navigate to={ROUTES.DASHBOARD} replace />} />
-        <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
-        <Route path={ROUTES.MAPA} element={<MapaPage />} />
+        <Route path="/" element={<Navigate to={ROUTES.LOGIN} replace />} />
+        <Route path={ROUTES.DASHBOARD} element={<WipPage />} />
+        <Route path={ROUTES.MAPA} element={<WipPage />} />
         
         {/* Predios */}
-        <Route path={ROUTES.PREDIOS} element={<PrediosPage />} />
-        <Route path={ROUTES.PREDIO_DETALLE} element={<PredioDetallePage />} />
-        <Route path={ROUTES.PREDIO_PREDIAL} element={<PredialPage />} />
+        <Route path={ROUTES.PREDIOS} element={<WipPage />} />
+        <Route path={ROUTES.PREDIO_DETALLE} element={<WipPage />} />
+        <Route path={ROUTES.PREDIO_PREDIAL} element={<WipPage />} />
 
         {/* Trámites */}
-        <Route path={ROUTES.TRAMITES} element={<TramitesPage />} />
-        <Route path={ROUTES.TRAMITE_NUEVO} element={<TramiteNuevoPage />} />
-        <Route path={ROUTES.TRAMITE_DETALLE} element={<TramiteDetallePage />} />
+        <Route path={ROUTES.TRAMITES} element={<WipPage />} />
+        <Route path={ROUTES.TRAMITE_NUEVO} element={<WipPage />} />
+        <Route path={ROUTES.TRAMITE_DETALLE} element={<WipPage />} />
 
         {/* Pagos y Documentos */}
-        <Route path={ROUTES.PAGOS} element={<PagosPage />} />
-        <Route path={ROUTES.DOCUMENTOS} element={<DocumentosPage />} />
+        <Route path={ROUTES.PAGOS} element={<WipPage />} />
+        <Route path={ROUTES.DOCUMENTOS} element={<WipPage />} />
 
         {/* Roles Internos */}
-        <Route path={ROUTES.GESTOR_SOLICITUDES} element={<GestorSolicitudesPage />} />
-        <Route path={ROUTES.GESTOR_TRAZO} element={<GestorTrazoPage />} />
-        <Route path={ROUTES.AUTORIZADOR_PENDIENTES} element={<AutorizadorPendientesPage />} />
-        <Route path={ROUTES.DIRECTOR_PANEL} element={<DirectorPanelPage />} />
-        <Route path={ROUTES.CAJERO_CONCILIACION} element={<CajeroConciliacionPage />} />
-        <Route path={ROUTES.ESTADISTICAS} element={<EstadisticasPage />} />
+        <Route path={ROUTES.GESTOR_SOLICITUDES} element={<WipPage />} />
+        <Route path={ROUTES.GESTOR_TRAZO} element={<WipPage />} />
+        <Route path={ROUTES.AUTORIZADOR_PENDIENTES} element={<WipPage />} />
+        <Route path={ROUTES.DIRECTOR_PANEL} element={<WipPage />} />
+        <Route path={ROUTES.CAJERO_CONCILIACION} element={<WipPage />} />
+        <Route path={ROUTES.ESTADISTICAS} element={<WipPage />} />
 
         {/* Administración */}
-        <Route path={ROUTES.ADMIN_USUARIOS} element={<AdminUsuariosPage />} />
-        <Route path={ROUTES.ADMIN_CATALOGOS} element={<AdminCatalogosPage />} />
-        <Route path={ROUTES.ADMIN_TARIFAS} element={<AdminTarifasPage />} />
-        <Route path={ROUTES.ADMIN_BITACORA} element={<AdminBitacoraPage />} />
-      </Route>
+        <Route path={ROUTES.ADMIN_USUARIOS} element={<WipPage />} />
+        <Route path={ROUTES.ADMIN_CATALOGOS} element={<WipPage />} />
+        <Route path={ROUTES.ADMIN_TARIFAS} element={<WipPage />} />
+        <Route path={ROUTES.ADMIN_BITACORA} element={<WipPage />} />
 
-      {/* 404 */}
-      <Route path="*" element={<NotFoundPage />} />
+        {/* 404 */}
+        <Route path="*" element={<WipPage />} />
+      </Route>
     </Routes>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { Accessibility, Bot, MapPin, X } from 'lucide-react';
+import { Accessibility, MapPin, X } from 'lucide-react';
 import logoOficial from '@/assets/images/logo-oficial.png';
 import emblemaC from '@/assets/images/emblema-c.png';
 import AuthBackground from './AuthBackground';
@@ -11,7 +11,6 @@ export default function AuthLayout() {
 
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
-  const [showChatModal, setShowChatModal] = useState(false);
 
   return (
     <AuthBackground>
@@ -40,13 +39,12 @@ export default function AuthLayout() {
         </div>
       </header>
 
-      {/* 2. Cuerpo Central: C más grande y formulario desplazado hacia la izquierda */}
+      {/* 2. Cuerpo Central */}
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
         <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px]">
           
-          {/* Lado Izquierdo: Emblema C más grande + Texto Institucional */}
+          {/* Lado Izquierdo: Emblema C + Texto Institucional */}
           <div className="hidden lg:flex lg:col-span-6 xl:col-span-6 items-center gap-6 xl:gap-8 pl-4 lg:pl-8 xl:pl-12">
-            {/* Emblema "C" en tamaño destacado */}
             <div className="shrink-0 relative">
               <div className="absolute -inset-4 bg-amber-500/10 rounded-full blur-2xl" />
               <img
@@ -56,7 +54,6 @@ export default function AuthLayout() {
               />
             </div>
 
-            {/* Texto descriptivo limpio y elegante */}
             <div className="max-w-[290px] text-white space-y-3.5">
               <p className="text-[18px] xl:text-[19px] font-normal leading-[1.38] text-white/95 tracking-normal">
                 {isRegister
@@ -75,7 +72,7 @@ export default function AuthLayout() {
             </div>
           </div>
 
-          {/* Lado Derecho: Tarjeta del formulario desplazada hacia la izquierda */}
+          {/* Lado Derecho: Formulario */}
           <div className="lg:col-span-6 xl:col-span-6 flex justify-center lg:justify-start lg:pl-6 xl:pl-8 z-20">
             <Outlet />
           </div>
@@ -83,23 +80,23 @@ export default function AuthLayout() {
         </div>
       </div>
 
-      {/* 3. Footer Institucional Oficial (Fondo oscuro con logo, links y botones flotantes laterales) */}
+      {/* 3. Footer Oficial Gris Oscuro (SIN CHATBOT) */}
       <footer className="bg-[#262626] text-white py-5 px-4 sm:px-8 border-t border-black/20 relative z-20">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
-          {/* Botón Accesibilidad (Inferior Izquierda) */}
+          {/* Botón Accesibilidad (Izquierda) */}
           <div className="flex-1 flex justify-start">
             <button
               type="button"
               title="Herramientas de Accesibilidad"
-              onClick={() => alert('Menú de Accesibilidad habilitado:\n• Contraste alto\n• Tamaño de fuente adaptable\n• Modo lectura para personas con discapacidad visual.')}
+              onClick={() => alert('Menú de Accesibilidad habilitado:\n• Contraste alto\n• Tamaño de fuente adaptable\n• Modo lectura.')}
               className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#741333] border-2 border-amber-300 flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform cursor-pointer"
             >
               <Accessibility className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </button>
           </div>
 
-          {/* Centro: Logotipo Institucional + Enlaces en Mayúsculas (sin redes sociales) */}
+          {/* Centro: Logotipo Institucional + Enlaces en Mayúsculas */}
           <div className="flex flex-col items-center justify-center text-center space-y-2.5">
             <img
               src={logoOficial}
@@ -126,17 +123,8 @@ export default function AuthLayout() {
             </div>
           </div>
 
-          {/* Botón Asistente Virtual / WhatsApp (Inferior Derecha) */}
-          <div className="flex-1 flex justify-end">
-            <button
-              type="button"
-              title="Asistente Virtual de Catastro"
-              onClick={() => setShowChatModal(true)}
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#25D366] border-2 border-emerald-200/50 flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform cursor-pointer"
-            >
-              <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-            </button>
-          </div>
+          {/* Espaciador derecho para equilibrar (SIN CHATBOT) */}
+          <div className="flex-1 flex justify-end" />
 
         </div>
       </footer>
@@ -184,10 +172,7 @@ export default function AuthLayout() {
                 El <strong>H. Ayuntamiento de Coatzacoalcos</strong>, a través de la Dirección de Catastro Municipal, es el responsable del tratamiento de los datos personales proporcionados por los contribuyentes conforme a la <em>Ley de Catastro del Estado de Veracruz</em>.
               </p>
               <p>
-                Los datos recabados (nombre, CURP, RFC, datos prediales, escrituras y documentos de propiedad) serán utilizados única y exclusivamente para los fines de inscripción, registro catastral, cálculo de avalúos y recaudación del impuesto predial.
-              </p>
-              <p>
-                No se realizarán transferencias de datos personales, salvo aquellas que sean estrictamente necesarias para atender requerimientos de información de una autoridad competente debidamente fundada y motivada.
+                Los datos recabados serán utilizados única y exclusivamente para los fines de inscripción, registro catastral, cálculo de avalúos y recaudación del impuesto predial.
               </p>
             </div>
             <button
@@ -195,37 +180,6 @@ export default function AuthLayout() {
               className="w-full py-2 bg-[#741333] hover:bg-[#580a22] text-white rounded-lg text-xs font-semibold"
             >
               Entendido
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Modal: Asistente Virtual */}
-      {showChatModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-sm w-full p-5 text-gray-900 shadow-2xl space-y-4">
-            <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center">
-                  <Bot className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-sm">Asistente Catastral Coatza</h4>
-                  <p className="text-[10px] text-emerald-600 font-medium">En línea</p>
-                </div>
-              </div>
-              <button onClick={() => setShowChatModal(false)} className="text-gray-400 hover:text-gray-600">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="bg-emerald-50/70 p-3 rounded-lg text-xs text-emerald-900 leading-normal">
-              ¡Hola! Soy el asistente virtual del Catastro Municipal de Coatzacoalcos. ¿En qué trámite catastral te puedo orientar hoy?
-            </div>
-            <button
-              onClick={() => setShowChatModal(false)}
-              className="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold"
-            >
-              Cerrar chat
             </button>
           </div>
         </div>
