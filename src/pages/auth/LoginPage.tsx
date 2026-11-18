@@ -19,13 +19,25 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    const cleanId = identifier.trim();
+    if (!cleanId) {
+      setError('Ingresa tu correo electrónico, CURP o RFC registrado.');
+      return;
+    }
+
+    if (!password) {
+      setError('Ingresa tu contraseña.');
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      await login(identifier, password);
+      await login(cleanId, password);
       navigate(ROUTES.DASHBOARD);
     } catch {
-      // Para desarrollo
+      // Fallback para desarrollo sin backend corriendo
       navigate(ROUTES.DASHBOARD);
     } finally {
       setIsLoading(false);
@@ -38,14 +50,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl p-7 sm:p-8 w-full max-w-[390px] text-gray-900 border border-gray-100/80">
+    <div className="bg-white rounded-2xl shadow-2xl p-7 sm:p-8 w-full max-w-[400px] text-gray-900 border border-gray-100/90">
       {/* Título y subtítulo */}
       <div className="mb-5">
         <h2 className="text-[23px] font-bold text-gray-900 tracking-tight leading-snug">
           Iniciar sesión
         </h2>
         <p className="text-xs text-gray-500 mt-1 font-normal">
-          Ingresa a tu cuenta para acceder al sistema.
+          Acceso oficial para ciudadanos y personas morales empadronadas.
         </p>
       </div>
 
@@ -56,9 +68,9 @@ export default function LoginPage() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-3.5">
-        {/* Identificador */}
+        {/* Identificador: Correo, CURP o RFC (RF-AUT-04) */}
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1.5">
+          <label className="block text-xs font-semibold text-gray-700 mb-1">
             Correo electrónico, CURP o RFC
           </label>
           <input
@@ -66,15 +78,18 @@ export default function LoginPage() {
             required
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
-            placeholder="nombre@ejemplo.com / CURP / RFC"
+            placeholder="correo@ejemplo.com / CURP / RFC"
             className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-xs sm:text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#741333] focus:ring-1 focus:ring-[#741333] transition-colors"
           />
+          <p className="text-[10px] text-gray-400 mt-1">
+            Puedes identificarte con cualquiera de tus 3 datos oficiales (RF-AUT-04).
+          </p>
         </div>
 
         {/* Contraseña */}
         <div>
-          <div className="flex justify-between items-center mb-1.5">
-            <label className="block text-xs font-medium text-gray-700">
+          <div className="flex justify-between items-center mb-1">
+            <label className="block text-xs font-semibold text-gray-700">
               Contraseña
             </label>
             <Link
@@ -112,7 +127,7 @@ export default function LoginPage() {
               onChange={(e) => setRememberMe(e.target.checked)}
               className="rounded border-gray-300 text-[#741333] focus:ring-[#741333] w-3.5 h-3.5"
             />
-            <span className="text-xs text-gray-600 font-normal">Mantener sesión iniciada</span>
+            <span className="text-xs text-gray-600 font-normal">Mantener sesión activa</span>
           </label>
         </div>
 
@@ -120,20 +135,20 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full mt-2 py-2.5 px-4 bg-[#741333] hover:bg-[#580a22] text-white font-medium rounded-lg text-xs sm:text-sm transition-colors duration-150 shadow-md hover:shadow-lg cursor-pointer disabled:opacity-50"
+          className="w-full mt-2 py-2.5 px-4 bg-[#741333] hover:bg-[#580a22] text-white font-semibold rounded-lg text-xs sm:text-sm transition-colors duration-150 shadow-md hover:shadow-lg cursor-pointer disabled:opacity-50"
         >
-          {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+          {isLoading ? 'Comprobando credenciales...' : 'Acceder al Padrón'}
         </button>
       </form>
 
       {/* Sección inferior */}
       <div className="mt-5 pt-4 border-t border-gray-100 text-center space-y-2">
-        <p className="text-xs text-gray-600 font-normal">¿No tienes una cuenta?</p>
+        <p className="text-xs text-gray-600 font-normal">¿Aún no estás registrado en el catastro?</p>
         <Link
           to={ROUTES.REGISTER}
-          className="w-full py-2.5 px-4 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg text-xs sm:text-sm transition-colors block text-center"
+          className="w-full py-2 px-4 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg text-xs sm:text-sm transition-colors block text-center"
         >
-          Crea tu cuenta
+          Crear cuenta de contribuyente
         </Link>
       </div>
 
@@ -146,28 +161,28 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => handleQuickRoleAccess(UserRole.CIUDADANO)}
-            className="px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded"
+            className="px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded font-medium"
           >
             Ciudadano
           </button>
           <button
             type="button"
             onClick={() => handleQuickRoleAccess(UserRole.GESTOR)}
-            className="px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded"
+            className="px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded font-medium"
           >
             Gestor
           </button>
           <button
             type="button"
             onClick={() => handleQuickRoleAccess(UserRole.AUTORIZADOR)}
-            className="px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded"
+            className="px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded font-medium"
           >
             Autorizador
           </button>
           <button
             type="button"
             onClick={() => handleQuickRoleAccess(UserRole.DIRECTOR)}
-            className="px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded"
+            className="px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded font-medium"
           >
             Director
           </button>
