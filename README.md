@@ -1,109 +1,77 @@
 # Sistema de Información y Gestión Catastral — Coatzacoalcos, Veracruz
 
-Sistema web integral para el registro, consulta cartográfica, administración de predios, validación automática de expedientes, cálculo de avalúos y recaudación simulada para el Municipio de Coatzacoalcos, Veracruz (Clave Catastral Municipal `040`).
+Sistema web integral para el registro, consulta cartográfica, administración de predios, validación automática de expedientes, cálculo de avalúos y recaudación del impuesto predial para el Municipio de Coatzacoalcos, Veracruz (Clave Catastral Municipal `040`).
+
+---
+
+## 👥 Equipo de Desarrollo y Asignación de Roles
+
+| Área | Integrante | Rol / Responsabilidad | Rama Git |
+|---|---|---|---|
+| **Frontend** | **Katia (Kat)** | Diseño y maquetación UI/UX, vistas de usuario, componentes y flujos | `Kat` |
+| **Frontend** | **Jessica** | Pantallas de roles, validaciones de formularios y vistas de consulta | `Jessica` |
+| **Backend** | **Miguel** | Arquitectura de servicios, lógica de negocio y APIs REST | `Miguel` |
+| **Backend** | **Diony** | Servicios de autenticación, seguridad y permisos por rol | `Diony` |
+| **Backend** | **Cesar** | Gestión de datos catastrales, trámites y conexión a base de datos | `Cesar` |
+| **Mapeo / GIS** | **Francisco (Paco)** | Capas cartográficas, visores geoespaciales y delimitación de predios | `Paco` |
+| **Full Stack** | **Evelyn (Eve)** | Integración frontend-backend, flujos completos y soporte general | `Eve` |
+
+---
+
+## 🌿 Convención y Flujo de Ramas (Git Flow)
+
+* **`main`**: Rama principal y código en producción.
+* **`developer`**: Rama de integración y desarrollo continuo del equipo.
+* **Ramas individuales:** Cada integrante trabaja sus avances en su rama respectiva (`Kat`, `Jessica`, `Miguel`, `Diony`, `Cesar`, `Paco`, `Eve`) y se integran a `developer` mediante Pull Requests.
 
 ---
 
 ## 🏛️ Marco Normativo y Legal
-- **Ley de Catastro del Estado de Veracruz**
-- **Reglamento de la Ley de Catastro del Estado de Veracruz** (Gaceta Oficial núm. 227, 25 de septiembre de 2006)
-- **Formato Oficial de Cédula Catastral:** Modelo estatal DGCV-015
-- **Estructura Oficial de la Clave Catastral (22 dígitos):**
+* **Ley de Catastro del Estado de Veracruz**
+* **Reglamento de la Ley de Catastro del Estado de Veracruz** (Gaceta Oficial núm. 227)
+* **Formato Oficial de Cédula Catastral:** Modelo estatal DGCV-015
+* **Clave Catastral Oficial (22 dígitos):**
   `Zona (2) · Municipio (3) · Localidad (3) · Región (2) · Manzana (3) · Lote (3) · Nivel (2) · Depto (3) · DV (1)`
-
----
-
-## 👥 Equipo y Distribución de Roles por Rama Git
-
-| # | Rol | Responsabilidad Principal | Rama Asignada |
-|---|-----|---------------------------|---------------|
-| 1 | **Líder Técnico y Arquitectura** | Diseño del sistema, modelo de datos, API, code review, control Git | `feat/01-lider-tecnico-arquitectura` |
-| 2 | **Full Stack** | Autenticación, vinculación de predios, flujo trámite → pago → doc | `feat/02-fullstack-flujos` |
-| 3 | **Frontend (Tú)** | Pantallas de cada rol, formularios con validación, historiales y comprobantes | `feat/03-frontend-pantallas-vistas` |
-| 4 | **Frontend de Mapas** | MapLibre GL: capas de predios, manzanas, satélite/plano, editor de trazos | `feat/04-frontend-mapas-trazo` |
-| 5 | **Backend y GIS** | Spring Boot / FastAPI, PostGIS, validación topológica (traslapes), OTs | `feat/05-backend-gis-servicios` |
-| 6 | **Documentos y Validaciones**| Cédula DGCV-015, recibo oficial, constancia con QR, motor de validación | `feat/06-documentos-validaciones` |
-| 7 | **QA y DevOps** | Pruebas unitarias/E2E, Docker Compose, CI/CD GitHub Actions, seed data | `feat/07-qa-devops-pruebas` |
 
 ---
 
 ## 🏗️ Stack Tecnológico
 
 ### Frontend
-- **Framework:** React 19 + TypeScript
-- **Bundler:** Vite
-- **Estilos:** Tailwind CSS v4
-- **Iconografía:** Lucide React & React Icons
-- **Enrutamiento:** React Router DOM v7
-- **Formularios & Validación:** React Hook Form + Zod
-- **Cartografía:** MapLibre GL / Leaflet (EPSG:4326 WGS84 con proyecciones métricas en EPSG:32615 UTM Zona 15N)
+* **Framework:** React 19 + TypeScript
+* **Bundler & Tooling:** Vite
+* **Estilos:** Tailwind CSS v4
+* **Tipografía Oficial:** Plus Jakarta Sans
+* **Iconografía:** Lucide React & React Icons
+* **Enrutamiento:** React Router DOM v7
+* **Validación:** React Hook Form + Zod
 
-### Backend & Base de Datos (Integración)
-- **Backend:** Java Spring Boot / Python FastAPI
-- **Base de Datos:** PostgreSQL con extensión PostGIS
-- **Autenticación:** JWT con cifrado de contraseñas (Argon2id / BCrypt)
-
----
-
-## 📁 Estructura del Proyecto
-
-```text
-Catastro/
-├── docs/                     # Documentación de arquitectura y requisitos
-├── public/                   # Activos estáticos públicos
-├── src/
-│   ├── assets/               # Imágenes, fuentes e iconos
-│   ├── components/
-│   │   ├── common/           # Componentes genéricos reutilizables
-│   │   ├── forms/            # Componentes de formulario y validadores
-│   │   ├── layout/           # Navbar, Sidebar, MainLayout, AuthLayout
-│   │   ├── map/              # Visor y controles cartográficos
-│   │   └── ui/               # Botones, Cards, Inputs, Badges, Modales
-│   ├── constants/            # Rutas, roles, vigencias y tarifas
-│   ├── context/              # Contextos de React (AuthContext)
-│   ├── hooks/                # Custom hooks
-│   ├── pages/
-│   │   ├── admin/            # Vistas de Administrador (usuarios, catálogos, tarifas, bitácora)
-│   │   ├── auth/             # Login, Registro (física/moral), Recuperación
-│   │   ├── autorizador/      # Aprobación de planos, cotizaciones y altas
-│   │   ├── cajero/           # Conciliación de pagos y recibos oficiales
-│   │   ├── ciudadano/        # Vistas de contribuyentes
-│   │   ├── dashboard/        # Pantalla principal del portal
-│   │   ├── director/         # Despacho: controversias, bajas/fusiones, firmas
-│   │   ├── documentos/       # Bóveda de cédulas y constancias emitidas
-│   │   ├── estadisticas/     # Inteligencia territorial y cobertura de servicios
-│   │   ├── gestor/           # Bandeja de trámites y editor de trazo
-│   │   ├── mapa/             # Visor cartográfico interactivo
-│   │   ├── pagos/            # Pasarela y comprobantes de pago
-│   │   ├── predios/          # Mis predios, ficha técnica e historial predial
-│   │   └── tramites/         # Checklist de expedientes y solicitud
-│   ├── routes/               # Configuración central de rutas (AppRoutes)
-│   ├── services/             # Clientes de API Axios y servicios por módulo
-│   ├── types/                # Definiciones de TypeScript (Auth, Predios, Trámites)
-│   └── utils/                # Formateadores (moneda, fecha, clave catastral, CURP)
-└── package.json
-```
+### Backend y Base de Datos (Integración)
+* **Backend:** Spring Boot (Java) / FastAPI (Python)
+* **Base de Datos:** PostgreSQL con extensión espacial **PostGIS**
+* **Sistema de Coordenadas:** Almacenamiento en WGS84 (`EPSG:4326`) y proyecciones en UTM Zona 15N (`EPSG:32615`)
 
 ---
 
-## 🚀 Inicio Rápido
+## 🚀 Inicio Rápido en Local
 
-1. **Instalar dependencias:**
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/KatiaChable/Catastro.git
+   cd Catastro
+   ```
+
+2. **Instalar dependencias:**
    ```bash
    npm install
    ```
-2. **Iniciar servidor de desarrollo:**
+
+3. **Iniciar servidor de desarrollo:**
    ```bash
    npm run dev
    ```
-3. **Construir para producción:**
+
+4. **Compilar para producción:**
    ```bash
    npm run build
    ```
-
----
-
-## 🌿 Convención de Ramas y Git Flow
-- Rama principal protegida: `main`
-- Rama de integración continua: `develop`
-- Ramas por funcionalidad: `feat/<numero-rol>-<descripcion-corta>`
