@@ -6,6 +6,8 @@ import { MainLayout, AuthLayout } from '@/components/layout';
 import LoginPage from '@/pages/auth/LoginPage';
 import RegisterPage from '@/pages/auth/RegisterPage';
 import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
+import ResetPasswordPage from '@/pages/auth/ResetPasswordPage';
+import VerifyEmailPage from '@/pages/auth/VerifyEmailPage';
 
 // Dashboard Ciudadano oficial
 import CiudadanoDashboardPage from '@/pages/ciudadano/CiudadanoDashboardPage';
@@ -21,6 +23,8 @@ export function AppRoutes() {
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
         <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
+        <Route path={ROUTES.RESET_PASSWORD} element={<ResetPasswordPage />} />
+        <Route path={ROUTES.VERIFY_EMAIL} element={<VerifyEmailPage />} />
       </Route>
 
       {/* 2. Dashboard Ciudadano (con barra lateral, consulta oficial y sin mapas) */}

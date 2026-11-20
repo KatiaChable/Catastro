@@ -4,23 +4,16 @@ Sistema web integral para el registro, consulta cartográfica, administración d
 
 ---
 
-## 👥 Integrantes y Roles
+## 👥 Equipo de Desarrollo y Asignación de Roles
 
-* **Backend:** Miguel, Diony, Cesar
-* **Frontend:** Jessica, Katia
-* **Mapeo:** Francisco
-* **Full Stack:** Evelyn
-
-### Detalle de Roles y Ramas de Trabajo
-
-| Área | Integrante | Responsabilidad Principal | Rama Git |
+| Área | Integrante | Rol / Responsabilidad | Rama Git |
 |---|---|---|---|
+| **Frontend** | **Katia (Kat)** | Diseño y maquetación UI/UX, vistas de usuario, componentes y flujos | `Kat` |
+| **Frontend** | **Jessica** | Pantallas de roles, validaciones de formularios y vistas de consulta | `Jessica` |
 | **Backend** | **Miguel** | Arquitectura de servicios, lógica de negocio y APIs REST | `Miguel` |
 | **Backend** | **Diony** | Servicios de autenticación, seguridad y permisos por rol | `Diony` |
 | **Backend** | **Cesar** | Gestión de datos catastrales, trámites y conexión a base de datos | `Cesar` |
-| **Frontend** | **Jessica** | Pantallas de roles, validaciones de formularios y vistas de consulta | `Jessica` |
-| **Frontend** | **Katia (Kat)** | Diseño y maquetación UI/UX, vistas de usuario, componentes y flujos | `Kat` |
-| **Mapeo** | **Francisco (Paco)** | Capas cartográficas, visores geoespaciales y delimitación de predios | `Paco` |
+| **Mapeo / GIS** | **Francisco (Paco)** | Capas cartográficas, visores geoespaciales y delimitación de predios | `Paco` |
 | **Full Stack** | **Evelyn (Eve)** | Integración frontend-backend, flujos completos y soporte general | `Eve` |
 
 ---

@@ -10,6 +10,7 @@ export const ROUTES = {
   LOGIN: '/login',
   REGISTER: '/registro',
   FORGOT_PASSWORD: '/recuperar-contrasena',
+  RESET_PASSWORD: '/restablecer-contrasena',
   VERIFY_EMAIL: '/verificar-correo',
   VERIFY_PHONE: '/verificar-celular',
   VERIFICADOR_PUBLICO: '/verificar/:folio',

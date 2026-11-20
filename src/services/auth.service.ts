@@ -57,16 +57,19 @@ export const authService = {
     return data;
   },
 
-  /** Cambiar contraseña con token de recuperación */
-  async resetPassword(
-    token: string,
-    newPassword: string,
-    codigoCelular: string
-  ): Promise<{ message: string }> {
+  /** Cambiar contraseña con el token del enlace del correo (vence en 30 min) */
+  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
     const { data } = await apiClient.post(`${AUTH_PREFIX}/reset-password`, {
       token,
       newPassword,
-      codigoCelular,
+    });
+    return data;
+  },
+
+  /** Reenviar el enlace de verificación de correo (correo, CURP o RFC) */
+  async reenviarVerificacion(identifier: string): Promise<{ message: string }> {
+    const { data } = await apiClient.post(`${AUTH_PREFIX}/verificar-correo/reenviar`, {
+      identifier,
     });
     return data;
   },
