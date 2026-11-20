@@ -1,0 +1,25 @@
+# Base de datos local: PostgreSQL 17 + PostGIS.
+# Levantar:  docker compose up -d      Apagar:  docker compose down
+# Los scripts de sql/ se ejecutan solo la PRIMERA vez (con el volumen vacío).
+# Para volver a correrlos: docker compose down -v  (borra los datos locales)
+services:
+  db:
+    image: postgis/postgis:17-3.5
+    container_name: catastro-db
+    environment:
+      POSTGRES_DB: catastro
+      POSTGRES_USER: catastro
+      POSTGRES_PASSWORD: catastro
+    ports:
+      - "5432:5432"
+    volumes:
+      - datos-catastro:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U catastro -d catastro"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  datos-catastro:

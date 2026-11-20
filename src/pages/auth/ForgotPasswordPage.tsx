@@ -1,20 +1,37 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AlertCircle, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { ROUTES } from '@/constants';
+import { authService, leerErrorApi } from '@/services';
+import { identificadorSchema, type IdentificadorForm } from './schemas';
 
 export default function ForgotPasswordPage() {
-  const [identifier, setIdentifier] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [mensajeEnviado, setMensajeEnviado] = useState<string | null>(null);
+  const [errorGeneral, setErrorGeneral] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      setSubmitted(true);
-      setIsLoading(false);
-    }, 600);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<IdentificadorForm>({
+    resolver: zodResolver(identificadorSchema),
+    defaultValues: { identifier: '' },
+  });
+
+  // RF-AUT-05: la respuesta es la misma exista o no la cuenta
+  const onSubmit = async (datos: IdentificadorForm) => {
+    setErrorGeneral(null);
+    try {
+      const { message } = await authService.recuperarPassword(datos.identifier);
+      setMensajeEnviado(message);
+    } catch (error) {
+      const { mensaje, campos } = leerErrorApi(error);
+      if (campos.identifier) setError('identifier', { message: campos.identifier });
+      else setErrorGeneral(mensaje);
+    }
   };
 
   return (
@@ -28,13 +45,14 @@ export default function ForgotPasswordPage() {
         </p>
       </div>
 
-      {submitted ? (
+      {mensajeEnviado ? (
         <div className="space-y-4">
-          <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-xs text-green-900 flex items-start gap-2.5">
+          <div
+            role="status"
+            className="p-4 bg-green-50 border border-green-200 rounded-lg text-xs text-green-900 flex items-start gap-2.5"
+          >
             <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
-            <p>
-              Si la cuenta existe en el padrón catastral, hemos enviado un enlace temporal de 30 minutos y un código SMS a tu teléfono celular registrado (RF-AUT-05).
-            </p>
+            <p>{mensajeEnviado} Si no lo ves, revisa la carpeta de spam.</p>
           </div>
           <Link
             to={ROUTES.LOGIN}
@@ -44,27 +62,44 @@ export default function ForgotPasswordPage() {
           </Link>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+          {errorGeneral && (
+            <div
+              role="alert"
+              className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800 flex items-start gap-2"
+            >
+              <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+              <p>{errorGeneral}</p>
+            </div>
+          )}
+
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+            <label htmlFor="identifier" className="block text-xs font-semibold text-gray-700 mb-1.5">
               Correo electrónico o CURP / RFC
             </label>
             <input
+              id="identifier"
               type="text"
-              required
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
+              autoComplete="username"
               placeholder="nombre@ejemplo.com / CURP / RFC"
-              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm placeholder:text-gray-400 focus:outline-none focus:border-[#7a1737] focus:ring-1 focus:ring-[#7a1737] transition-colors"
+              aria-invalid={errors.identifier ? 'true' : 'false'}
+              aria-describedby="identifier-error"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm placeholder:text-gray-400 focus:outline-none focus:border-[#7a1737] focus:ring-1 focus:ring-[#7a1737] transition-colors aria-[invalid=true]:border-red-500"
+              {...register('identifier')}
             />
+            {errors.identifier && (
+              <p id="identifier-error" className="text-xs text-red-600 mt-1">
+                {errors.identifier.message}
+              </p>
+            )}
           </div>
 
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isSubmitting}
             className="w-full py-3 px-4 bg-[#7a1737] hover:bg-[#600f29] text-white font-medium rounded-lg text-sm transition-colors duration-150 shadow-md hover:shadow-lg disabled:opacity-50 cursor-pointer"
           >
-            {isLoading ? 'Enviando...' : 'Enviar enlace de recuperación'}
+            {isSubmitting ? 'Enviando...' : 'Enviar enlace de recuperación'}
           </button>
 
           <div className="text-center pt-2">
